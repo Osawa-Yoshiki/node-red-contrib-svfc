@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 node-red-contrib-svfc
 ==================
 
@@ -31,3 +32,6 @@ Usage
     <p><code>CSV Local Path</code>については、画面で設定する代わりに、msg.filenameでの指定が可能です。msg.filenameでの指定は画面の設定よりも優先されます。</p>
     <p>csvはカンマ区切りで1行目は必ずヘッダ項目を付加してください。</p>
 
+=======
+# node-red-contrib-svfc
+>>>>>>> c7c0ee2c01db75258f03b4aa23e61af3ab1e0106
