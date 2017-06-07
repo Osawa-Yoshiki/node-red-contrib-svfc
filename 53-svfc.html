@@ -1,0 +1,150 @@
+<!--
+  Copyright 2013 IBM Corp.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+
+<script type="text/x-red" data-template-name="svf cloud">
+    <div class="form-row">
+        <label for="node-input-credential"><i class="icon-user"></i><span data-i18n="svfc.label.credential"></span> Credential</label>
+        <input type="text" id="node-input-credential">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-printtype"><i class="icon-tasks"></i> Type </label>
+        <select id="node-input-printtype" style="width:125px !important">
+            <option value="PDF">PDF</option>
+            <option value="EXCEL">EXCEL</option>
+            <option value="DP">Direct Print</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-printerid"><i class="icon-tasks"></i> PrinterID </label>
+        <input type="text" id="node-input-printerid" placeholder="abcdefg1234567890">
+    </div>
+    <div class="form-row">
+        <label for="node-input-xml"><i class="icon-tasks"></i> Layout on SVF Cloud</label>
+        <input type="text" id="node-input-xml" placeholder="form/myfolder/example.xml">
+    </div>
+    <div class="form-row">
+        <label for="node-input-csv"><i class="icon-tasks"></i> CSV Local Path</label>
+        <input type="text" id="node-input-csv" placeholder="/home/ubuntu/Documents/sample.csv">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-pdfTitle"><i class="icon-tasks"></i> PDF Title Name (Optional)</label>
+        <input type="text" id="node-input-pdfTitle" placeholder="PDF Title Here (Optional)">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-password"><i class="icon-tasks"></i> PDF Password (Optional)</label>
+        <input type="text" id="node-input-password" placeholder="PDF Password Here(Optional)">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-pdfPermPass"><i class="icon-tasks"></i> PDF Owner Password (Optional)</label>
+        <input type="text" id="node-input-pdfPermPass" placeholder="PDF Owner Password Here(Optional)">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="svf client">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="svf cloud">
+    <p>SVF Cloudを用いてPDFなどで印刷をするノードです。</p>
+    <p>パラメータは次の通りです。</p>
+    <ul>
+    	<li><code>Type</code> : PDF or EXCEL or Direct Print(必須)</li>
+    	<li><code>PrinterID</code> : <code>Type</code>でDirect Printを選択した場合は必須です。</li>
+    	<li><code>Layout on SVF Cloud</code> : SVF Cloud上の様式ファイルのパスを指定します。(必須)</li>
+    	<li><code>CSV Local Path</code> : node-redを実行しているコンピュータ上にあるCSVファイルを絶対パスで指定します。(必須)</li>
+    	<li><code>PDF Title Name (Optional)</code> : PDFのプロパティのタイトルに表示される名称を指定します。(オプション)</li>
+    	<li><code>PDF Password (Optional)</code> : PDFの閲覧パスワードを指定します。(オプション)</li>
+    	<li><code>PDF Owner Password (Optional)</code> : PDFのオーナーパスワードを指定します。(オプション)</li>
+    	<li><code>Name</code> : 本ノードの名称を指定します。処理には影響しません。(オプション)</li>
+    </ul>
+    <p><code>CSV Local Path</code>については、画面で設定する代わりに、msg.filenameでの指定が可能です。msg.filenameでの指定は画面の設定よりも優先されます。</p>
+    <p>csvはカンマ区切りで1行目は必ずヘッダ項目を付加してください。</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('svf cloud',{
+        category: 'function',
+        color:"rgb(133, 165, 182)",
+        defaults: {
+            credential: {type:"svfc-config", required:true},
+	    printtype: {value:"PDF"},
+	    xml : {value:""},
+	    printerid: {value:""},
+	    csv: {value:""},
+            pdfTitle: {value:""},
+	    password: {value:""},
+	    pdfPermPass: {value:""},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "white-globe.png",
+        label: function() {
+            return this.name||"svf cloud";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+
+
+<script type="text/x-red" data-template-name="svfc-config">
+    <div class="form-row">
+        <label for="node-config-input-clientid"><i class="icon-tasks"></i><span data-i18n="svfc.label.credential"></span> ClientID </label>
+        <input type="text" id="node-config-input-clientid" placeholder="ClientID Here">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-secret"><i class="icon-lock"></i> Secret </label>
+        <input type="text" id="node-config-input-secret" placeholder="Secret Here">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-key"><i class="icon-tag"></i> RSA Key</label>
+        <input type="text" id="node-config-input-key" placeholder="RSA Key Copy & Paste Here">
+    </div>
+</script>
+
+<!--
+<script type="text/x-red" data-help-name="svfc-config">
+    <p>A node to print PDF/DirectPrint with using SVF Cloud.</p>
+</script>
+-->
+
+<script type="text/javascript">
+    RED.nodes.registerType('svfc-config',{
+        category: 'config',
+        defaults: {
+	    clientid: {value:""},
+	    secret: {value:""},
+            key: {value:""}
+        },
+        icon: "white-globe.png",
+        label: function() {
+            return this.clientid||"no name";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
