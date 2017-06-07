@@ -1,33 +1,34 @@
-node-red-contrib-svfc
-==================
+# node-red-contrib-svfc
 
-A <a href="http://nodered.org" target="_new">Node-RED</a> node to print PDF/Excel/DirectPrint using SVF Cloud.
+[Node-RED](http://nodered.org) Node to print PDF/Excel/DirectPrint using SVF Cloud.
 
-Install
--------
 
-Run the following command in the root directory of your Node-RED install
+## Install
 
+Run the following command in the root directory of your Node-RED install:
+
+````
     npm install node-red-contrib-svfc
+````
 
 
-it uses <a href="https://github.com/rfrench/poster"> poster</a> node package
+## Usage
 
-Usage
------
+### Input
+If you config before using this node, no need to set msg.payload, otherwise, you can also set local filepath of SVF formatted csv to msg.filepath, msg.filepath will read by node and send to SVF Cloud.
 
-    SVF Cloudを用いてPDFなどで印刷をするノードです。</p>
-    <p>パラメータは次の通りです。</p>
-    <ul>
-    	<li><code>Type</code> : PDF or EXCEL or Direct Print(必須)</li>
-    	<li><code>PrinterID</code> : <code>Type</code>でDirect Printを選択した場合は必須です。</li>
-    	<li><code>Layout on SVF Cloud</code> : SVF Cloud上の様式ファイルのパスを指定します。(必須)</li>
-    	<li><code>CSV Local Path</code> : node-redを実行しているコンピュータ上にあるCSVファイルを絶対パスで指定します。(必須)</li>
-    	<li><code>PDF Title Name (Optional)</code> : PDFのプロパティのタイトルに表示される名称を指定します。(オプション)</li>
-    	<li><code>PDF Password (Optional)</code> : PDFの閲覧パスワードを指定します。(オプション)</li>
-    	<li><code>PDF Owner Password (Optional)</code> : PDFのオーナーパスワードを指定します。(オプション)</li>
-    	<li><code>Name</code> : 本ノードの名称を指定します。処理には影響しません。(オプション)</li>
-    </ul>
-    <p><code>CSV Local Path</code>については、画面で設定する代わりに、msg.filenameでの指定が可能です。msg.filenameでの指定は画面の設定よりも優先されます。</p>
-    <p>csvはカンマ区切りで1行目は必ずヘッダ項目を付加してください。</p>
 
+### Output
+msg.payload will not be a array but buffer containing the file contents. If the case of Direct Print, msg.payload will only be response message.
+
+
+### Sample flow
+This flow uses a email node, it can send a PDF file created by SVF Cloud via Email.
+
+````
+[{"id":"72f6e65b.c93478","type":"svf cloud","z":"50bb5b03.f97c04","credential":"","printtype":"PDF","xml":"form/folder/example.xml","printerid":"","csv":"/home/ubuntu/invoice.csv","pdfTitle":"example","password":"","pdfPermPass":"","name":"","x":226,"y":156,"wires":[["8e18bfb3.d5516"]]},{"id":"5decae62.425a7","type":"inject","z":"50bb5b03.f97c04","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"x":117.99999237060547,"y":84.00002765655518,"wires":[["72f6e65b.c93478"]]},{"id":"8e18bfb3.d5516","type":"change","z":"50bb5b03.f97c04","name":"","rules":[{"t":"set","p":"attachments","pt":"msg","to":"payload","tot":"msg"},{"t":"set","p":"filename","pt":"msg","to":"example.pdf","tot":"str"}],"action":"","property":"","from":"","to":"","reg":false,"x":364,"y":244,"wires":[["8eff85ba.a76188"]]},{"id":"8eff85ba.a76188","type":"e-mail","z":"50bb5b03.f97c04","server":"smtp.gmail.com","port":"465","secure":true,"name":"user@example.com","dname":"","x":604.0000114440918,"y":171.00001668930054,"wires":[]}]
+````
+
+## Copyright and license
+
+Copyright 2017 IBM Corp. under the Apache 2.0 license.
