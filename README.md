@@ -16,18 +16,18 @@ it uses <a href="https://github.com/rfrench/poster"> poster</a> node package
 Usage
 -----
 
-    SVF Cloud��p����PDF�Ȃǂň��������m�[�h�ł��B</p>
-    <p>�p�����[�^�͎��̒ʂ�ł��B</p>
+    SVF Cloudを用いてPDFなどで印刷をするノードです。</p>
+    <p>パラメータは次の通りです。</p>
     <ul>
-    	<li><code>Type</code> : PDF or EXCEL or Direct Print(�K�{)</li>
-    	<li><code>PrinterID</code> : <code>Type</code>��Direct Print��I�������ꍇ�͕K�{�ł��B</li>
-    	<li><code>Layout on SVF Cloud</code> : SVF Cloud��̗l���t�@�C���̃p�X���w�肵�܂��B(�K�{)</li>
-    	<li><code>CSV Local Path</code> : node-red�����s���Ă���R���s���[�^��ɂ���CSV�t�@�C�����΃p�X�Ŏw�肵�܂��B(�K�{)</li>
-    	<li><code>PDF Title Name (Optional)</code> : PDF�̃v���p�e�B�̃^�C�g���ɕ\������閼�̂��w�肵�܂��B(�I�v�V����)</li>
-    	<li><code>PDF Password (Optional)</code> : PDF�̉{���p�X���[�h���w�肵�܂��B(�I�v�V����)</li>
-    	<li><code>PDF Owner Password (Optional)</code> : PDF�̃I�[�i�[�p�X���[�h���w�肵�܂��B(�I�v�V����)</li>
-    	<li><code>Name</code> : �{�m�[�h�̖��̂��w�肵�܂��B�����ɂ͉e�����܂���B(�I�v�V����)</li>
+    	<li><code>Type</code> : PDF or EXCEL or Direct Print(必須)</li>
+    	<li><code>PrinterID</code> : <code>Type</code>でDirect Printを選択した場合は必須です。</li>
+    	<li><code>Layout on SVF Cloud</code> : SVF Cloud上の様式ファイルのパスを指定します。(必須)</li>
+    	<li><code>CSV Local Path</code> : node-redを実行しているコンピュータ上にあるCSVファイルを絶対パスで指定します。(必須)</li>
+    	<li><code>PDF Title Name (Optional)</code> : PDFのプロパティのタイトルに表示される名称を指定します。(オプション)</li>
+    	<li><code>PDF Password (Optional)</code> : PDFの閲覧パスワードを指定します。(オプション)</li>
+    	<li><code>PDF Owner Password (Optional)</code> : PDFのオーナーパスワードを指定します。(オプション)</li>
+    	<li><code>Name</code> : 本ノードの名称を指定します。処理には影響しません。(オプション)</li>
     </ul>
-    <p><code>CSV Local Path</code>�ɂ��ẮA��ʂŐݒ肷�����ɁAmsg.filename�ł̎w�肪�\�ł��Bmsg.filename�ł̎w��͉�ʂ̐ݒ�����D�悳��܂��B</p>
-    <p>csv�̓J���}��؂��1�s�ڂ͕K���w�b�_���ڂ�t�����Ă��������B</p>
+    <p><code>CSV Local Path</code>については、画面で設定する代わりに、msg.filenameでの指定が可能です。msg.filenameでの指定は画面の設定よりも優先されます。</p>
+    <p>csvはカンマ区切りで1行目は必ずヘッダ項目を付加してください。</p>
 
