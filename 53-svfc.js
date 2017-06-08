@@ -1,6 +1,6 @@
 module.exports = function(RED) {
   'use strict';
-  var poster = require('poster');
+  //var poster = require('poster');
   var JSRSA = require('jsrsasign');
   var request = require('request');
   var poster = require('./lib/poster');
