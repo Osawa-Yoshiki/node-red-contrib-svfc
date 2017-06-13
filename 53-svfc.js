@@ -120,7 +120,11 @@ module.exports = function(RED) {
 
         // execute print
         var filepath = ((msg.filepath)? msg.filepath: csvfile);
-        msg.filename = ((msg.filename)? msg.filename: path.basename(filepath, '.csv') + '.pdf');
+        
+        if (!msg.filename) {
+          if (printtype == 'PDF') msg.filename = path.basename(filepath, '.csv') + '.pdf';
+          if (printtype == 'EXCEL') msg.filename = path.basename(filepath, '.csv') + '.xls';
+        }
 
         poster.post(filepath, options, function(err, data) {
 	  if (printtype == 'DP' && err) {
